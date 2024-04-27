@@ -1,0 +1,102 @@
+1 --> ASK :
+
+1) Find thoes cols / Key points due to which the employees are leaving the company 
+
+2) Find thoes cols which help us in the story telling 
+
+--------------------------------------
+--------------------------------------
+--------------------------------------
+
+
+2 --> Prepare / Collect Data
+
+Data is been collected from kaggle in csv format 
+shape is (1500 , 33)
+
+--------------------------------------
+--------------------------------------
+--------------------------------------
+
+3 --> Clean & Process Data
+
+	Remove Duplicate 
+	Replace Null values 
+	Replace Duplicate 
+
+--------------------------------------
+
+1st view -> column quality  
+to show all data for each col like % of  Duplicate , Null
+
+--------------------------------------
+
+To Remove null values 
+Home -> Remove Rows
+
+so we can sort col data in asc order due to which all null rows will at top 
+then we can remove top rows
+
+--------------------------------------
+
+To remove duplicate row 
+1st select all cols 
+then right click -> Remove Duplicate
+
+dont't delete individual col rows 
+1st select all cols then delecte 
+
+--------------------------------------
+
+To Replace Values eg TravelRarely and Travel_Rarely both are same 
+
+so select a col then right click -> Replace Values
+
+--------------------------------------
+
+To detect correct datatypes for our cols 
+1st Select all cols
+
+Transforms tab -> Detect Data Type
+
+--------------------------------------
+--------------------------------------
+--------------------------------------
+
+4 --> Analyze 
+
+We can do this by using the pivoit table and ploting Line / Pie / Bar charts to find relationship bwt a col and Attrition 
+
+Eg 
+
+df2.pivot_table(index=['AgeGroup'],columns='Attrition',values='EmpID',aggfunc='count').plot(kind='line',color='orange')
+
+1) x axis is Age Group Col
+2) y axis is EmpID with aggfunc count 
+3) and columns is Attriation legend yes
+
+--------------------------------------
+--------------------------------------
+8484868432.035186+
+-*/
+Creating DASHBOARD 
+
+--------------------------------------
+
+CARDS 
+
+KPIs are shown using Card
+
+each card represent an KPI
+
+New Columns Attrition Yes / No 
+to Attrition 1 / 0 
+Transform Data -> Add Column -> Conditional Col 
+
+We can also crate a Measure Attrition Rate to show % 
+sum (Attricount) / sum(Emp_count) 
+
+5 --> Share
+ 
+6 --> Act or Report 
+
