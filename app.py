@@ -13,7 +13,11 @@ def main():
         db = EmployeeData()
         emp = db.fetch_data()
 
+        col1,col2,col3 = st.columns(3)
         # graphs
+        with col1:
+            st.header("Total Employ Count")
+            st.title(df1.shape[0])
         bins = [18, 25, 35, 45, 55, 65]
 
         labels = ['18-25', '26-35', '36-45', '46-55', '55+']
@@ -25,6 +29,31 @@ def main():
         #st.write(remaining_df)
         df2 = df[df['Attrition']==1]
         #sst.write(df2)
+
+        
+        with col2:
+            st.header("Total Male Count")
+            st.title(df[df['Gender']=='Male'].shape[0])
+            
+
+        with col3:
+            st.header("Total Female Count")
+            st.title(df[df['Gender']=='Female'].shape[0])
+
+        st.title('Attrition by Gender')
+        age_pivot_table = df2.pivot_table(index='Gender', columns='Attrition', values='EmpID', aggfunc='count')
+        fig, ax = plt.subplots()
+        age_pivot_table.plot(kind='bar', ax=ax)
+        plt.title('Gender vs Attrition')
+        plt.xlabel('Gender')
+        plt.ylabel('Attrition count')
+        st.pyplot(fig)
+
+
+
+        st.title('Department')
+
+        st.title('Age Group')
         age_pivot_table = df2.pivot_table(index='AgeGroup', columns='Attrition', values='EmpID', aggfunc='count')
         fig, ax = plt.subplots()
         age_pivot_table.plot(kind='line', color='orange', ax=ax)
@@ -33,7 +62,7 @@ def main():
         plt.ylabel('Employee Count')
         st.pyplot(fig)
 
-
+        st.title('Department')
         dep= df2.pivot_table(index='Department',columns='Attrition',values='EmpID',aggfunc='count')
         fig, ax = plt.subplots()
         dep.plot(kind='bar', color='orange', ax=ax)
@@ -41,7 +70,8 @@ def main():
         plt.xlabel('Department')
         plt.ylabel('Employee Count')
         st.pyplot(fig)
-
+        
+        st.title('EducationField ')
         EducationField= df2.pivot_table(index=['EducationField'],columns='Attrition',values='EmpID',aggfunc='count')
         fig, ax = plt.subplots()
         EducationField.plot(kind='bar', color='orange', ax=ax)
@@ -59,24 +89,19 @@ def main():
         st.pyplot(fig)
 
 #
-        EducationField= df2.pivot_table(index=['EducationField'],columns='Attrition',values='EmpID',aggfunc='count')
+        st.title('City')
+        EducationField= df2.pivot_table(index=['City'],columns='Attrition',values='EmpID',aggfunc='count')
         fig, ax = plt.subplots()
         EducationField.plot(kind='bar', color='orange', ax=ax)
-        plt.title('Attrition by EducationField')
-        plt.xlabel('EducationField')
+        plt.title('Attrition by City')
+        plt.xlabel('City')
         plt.ylabel('Employee Count')
         st.pyplot(fig)
+
         #st.write(merged_df)
         merged_df_2 = merged_df[merged_df['Attrition']==1]                
         st.write(merged_df_2)
 #        
-        EducationField= df2.pivot_table(index=['EducationField'],columns='Attrition',values='EmpID',aggfunc='count')
-        fig, ax = plt.subplots()
-        EducationField.plot(kind='bar', color='orange', ax=ax)
-        plt.title('Attrition by EducationField')
-        plt.xlabel('EducationField')
-        plt.ylabel('Employee Count')
-        st.pyplot(fig)
 
 
 if __name__ == '__main__':
