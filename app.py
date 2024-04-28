@@ -1,15 +1,67 @@
 from df_prep import *
 
+st.markdown(
+    """
+    <style>
+    body {
+        background-color: #e6f2ff;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+    )
+ 
 def main():
-    st.title('Attrition Prediction App')
 
-    uploaded_file = st.file_uploader("Upload Excel/CSV file", type=['xlsx', 'csv'])
+    st.markdown(
+    f"""
+    <style>
+        .reportview-container .main .block-container{{
+            max-width: 100%;
+        }}
+        .reportview-container .main {{
+            padding-top: 2rem;
+            padding-right: 2rem;
+            padding-left: 2rem;
+            padding-bottom: 3rem;
+        }}
+        .sidebar .sidebar-content {{
+            padding-top: 0;
+        }}
+        .sidebar .sidebar-content .block-container {{
+            padding-top: 0;
+        }}
+        .reportview-container .main .block-container {{
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+        }}
+        .logo {{
+            display: block;
+            padding: 10px 0px;
+            margin-bottom: 20px;
+            width: 150px;  /* Adjust the width as needed */
+            border-radius: 50%;
+        }}
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+    
+
+# Add the company logo as a home page logo
+    st.sidebar.image('hr_image.jpg', use_column_width=True)
+    #st.image("hr_image.jpg", use_column_width=True,)
+    st.title('Employee Attrition Analysis and Future Forecast App')
+    
+    st.sidebar.title('Upload data')    
+    uploaded_file = st.sidebar.file_uploader("Upload Excel/CSV file", type=['xlsx', 'csv'])
 
     if uploaded_file is not None:
         df1 = pd.read_excel(uploaded_file)  
         obj = Prep()
         df = obj.prep_df(df1)
-        st.write(df)
+        #st.write(df)
         db = EmployeeData()
         emp = db.fetch_data()
 
@@ -40,7 +92,6 @@ def main():
             st.header("Total Female Count")
             st.title(df[df['Gender']=='Female'].shape[0])
 
-        st.title('Attrition by Gender')
         age_pivot_table = df2.pivot_table(index='Gender', columns='Attrition', values='EmpID', aggfunc='count')
         fig, ax = plt.subplots()
         age_pivot_table.plot(kind='bar', ax=ax)
@@ -51,7 +102,7 @@ def main():
 
 
 
-        st.title('Department')
+        #st.title('Department')
 
         st.title('Age Group')
         age_pivot_table = df2.pivot_table(index='AgeGroup', columns='Attrition', values='EmpID', aggfunc='count')
@@ -89,7 +140,7 @@ def main():
         st.pyplot(fig)
 
 #
-        st.title('City')
+        st.title('Correlation Between Cities and Employee Count')
         EducationField= df2.pivot_table(index=['City'],columns='Attrition',values='EmpID',aggfunc='count')
         fig, ax = plt.subplots()
         EducationField.plot(kind='bar', color='orange', ax=ax)
@@ -99,6 +150,7 @@ def main():
         st.pyplot(fig)
 
         #st.write(merged_df)
+        st.title('Possible Future Attrition Employee Details')
         merged_df_2 = merged_df[merged_df['Attrition']==1]                
         st.write(merged_df_2)
 #        

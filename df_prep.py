@@ -65,7 +65,7 @@ class EmployeeData:
         )
 
         # SQL query to fetch data from the Employee table
-        query = "SELECT * FROM Employee"
+        query = "SELECT EmpID,name,email,phone FROM Employee"
 
         # Fetch data into a pandas DataFrame
         df = pd.read_sql(query, conn)
